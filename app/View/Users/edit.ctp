@@ -1,0 +1,247 @@
+<?php
+/**
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * For full copyright and license information, please see the LICENSE.txt
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       app.View.Layouts
+ * @since         CakePHP(tm) v 0.10.0.1076
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
+ */
+
+$cakeDescription = __d('cake_dev', 'CakePHP: Edit User');
+$cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
+?>
+<section class="content-header">
+      <h1>
+        Edit User
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?php echo WEB_ROOT;?>/users/index">Users</a></li>
+        <li class="active">Edit User</li>
+      </ol>
+</section>
+
+<section class="content">
+	<div class="row">
+		<div class="col-sm-12">
+			<div class="box box-primary">
+				<div class="box-body">
+					<?php
+						echo $this->Form->create('User', array(
+							'class' => 'form-horizontal',
+							'formnovalidate' => true
+						));
+
+						echo $this->Form->input('firstname', array(
+						'required' => false,
+						'class' => 'form-control',
+						'label' => array('class' => 'col-sm-2 control-label'),
+						'div' => array('class' => 'form-group'),
+						'between' => '<div class="col-md-3">',
+						'after' => '</div>'
+						));
+						echo $this->Form->input('lastname', array(
+						'class' => 'form-control',
+						'label' => array('class' => 'col-sm-2 control-label'),
+						'div' => array('class' => 'form-group'),
+						'between' => '<div class="col-md-3">',
+						'after' => '</div>'
+						));
+						echo $this->Form->input('email', array(
+						'class' => 'form-control',
+						'label' => array('class' => 'col-sm-2 control-label'),
+						'div' => array('class' => 'form-group'),
+						'between' => '<div class="col-md-3">',
+						'after' => '</div>'
+						));
+						echo $this->Form->input('dob', array(
+						'class' => 'form-control datepicker',
+						'type' => 'text',
+						'id' => 'dob',
+						'label' => array('class' => 'col-sm-2 control-label'),
+						'div' => array('class' => 'form-group'),
+						'between' => '<div class="col-md-3">',
+						'after' => '</div>'
+						));
+
+						$options = array('male' => 'Male', 'female' => 'Female');
+						$attributes = array(
+							'legend' => false    
+						);
+						echo '<div class="form-group">
+							<label class="col-sm-2 control-label">Gender</label>
+							<div class="col-md-3">';
+						echo $this->Form->radio('gender', $options, $attributes, array(
+							'class' => 'radio-inline',
+							'label' => array('class' => 'col-sm-2 control-label'),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));
+						echo '</div>';
+						if ($this->Form->isFieldError('gender')){
+							echo $this->Form->error('gender');
+						}
+						echo '</div>';
+
+						echo $this->Form->input('address', array(
+						'class' => 'form-control',
+						'label' => array('class' => 'col-sm-2 control-label'),
+						'div' => array('class' => 'form-group'),
+						'between' => '<div class="col-md-3">',
+						'after' => '</div>'
+						));
+
+						echo $this->Form->input('country', array(
+							'required' => false,
+							'type' => 'select',
+							'onChange' => 'getStates(this.value)',
+							'label' => false,
+							'options' => $countries,
+							'class' => 'form-control',
+							'label' => array('class' => 'col-sm-2 control-label'),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));
+
+						echo $this->Form->input('state', array(
+							'required' => false,
+							'type' => 'select',
+							'id' => 'states',
+							'label' => false,
+							'options' => $states,
+							'onChange' => 'getCity(this.value)',
+							'class' => 'form-control',
+							'label' => array('class' => 'col-sm-2 control-label'),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));
+
+						echo $this->Form->input('city' ,array(
+							'required' => false,
+							'type' => 'select',
+							'label' => false,
+							'options' => $cities,
+							'id' => 'cities',
+							'class' => 'form-control',
+							'label' => array('class' => 'col-sm-2 control-label'),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));
+
+						echo $this->Form->input('doj', array(
+							'required' => false,
+							'class' => 'form-control datepciker',
+							'type' => 'text',
+							'id' => 'doj',
+							'label' => array('class' => 'col-sm-2 control-label'),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));
+
+						echo $this->Form->input('salary', array(
+							'required' => false,
+							'class' => 'form-control',
+							'type' => 'text',
+							'label' => array('class' => 'col-sm-2 control-label'),
+							'div' => array('class' => 'form-group'),
+							'between' => '<div class="col-md-3">',
+							'after' => '</div>'
+						));
+
+						echo $this->Form->input('id', array('type' => 'hidden'));
+
+						echo '<div class="col-sm-offset-2 col-sm-10">';
+						echo $this->Form->submit('submit', array(
+							'div' => false,
+							'class' => 'btn btn-sm btn-primary mar_right5'
+						));
+						echo $this->Form->button('Cancel', array(
+							'type'=>'button',
+							'class' => 'btn btn-sm btn-danger',
+							'div' => false,
+							'onclick' => 'cancelFrm();'
+						));
+						echo '</div>';
+
+						echo $this->Form->end();
+
+						?>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#dob").datepicker({
+		minDate: new Date(1900,1-1,1), maxDate: '-18Y',
+		dateFormat: 'yy-mm-dd',
+		changeMonth: true,
+		changeYear: true,
+		yearRange: '-110:-18'
+	});
+
+	$("#doj").datepicker({
+		dateFormat: 'yy-mm-dd',
+		maxDate: 0
+	});
+});
+
+function getStates(id)
+{
+	if (id) {
+		$.ajax({
+			url: "<?php echo $this->webroot;?>Users/getStates/"+id,
+			type: "get",
+			dataType: "json",
+			success: function(response) {
+				var html = '<option value="">--Select one--</option>';
+				$.each(response, function(key, index){
+					html +='<option value="'+key+'">'+index+'</option>';
+				});
+				$("#states").html(html);
+			}
+		});
+	} else {
+		alert("Please select country");
+	}
+}
+
+function getCity(id)
+{
+	if (id) {
+		$.ajax({
+			url: "<?php echo $this->webroot;?>Users/getCity/"+id,
+			type: "get",
+			dataType: "json",
+			success: function(response) {
+				var html = '<option value="">--Select one--</option>';
+				$.each(response, function(key, index){
+					html +='<option value="'+key+'">'+index+'</option>';					
+				});
+				$("#cities").html(html);
+			}
+		});
+	} else {
+		alert("Please select state");
+	}
+}
+
+function cancelFrm()
+{
+	window.location.href = "<?php echo $this->webroot;?>Users/index";
+}
+</script>
